@@ -19,12 +19,21 @@
                   <a class="button is-link is-inverted is-outlined" href="/about-us">
                   <strong>About Us</strong>
                   </a>
-                  <a class="button is-link is-inverted is-outlined" href="/my-account">
+                  <% if(isAuth){ %>
+                  <a class="button is-link is-inverted is-outlined" href="/user/my-account">
                   <strong>My Account</strong>
                   </a>
-                  <a class="button is-dark" href="/login">
+                  <%}%>
+                  <% if(!isAuth){ %>
+                  <a class="button is-dark" href="/user/login">
                   Log in / SignUp
                   </a>
+                  <% } %>
+                  <% if(isAuth){ %>
+                  <a class="button is-dark" href="/user/logout">
+                  Logout
+                  </a>
+                  <% } %>
                </div>
             </div>
          </div>

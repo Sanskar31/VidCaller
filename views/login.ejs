@@ -13,10 +13,12 @@
                         <p class="title">
                            Log In
                         </p>
+                        <%- include('./partials/login-messages') %>
+                        <form action="/user/login" method="post">
                         <div class="field">
                            <label class="label">Email</label>
                            <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="Email input" value="hello@">
+                              <input class="input" type="email" placeholder="Email input" name="email">
                               <span class="icon is-small is-left">
                               <i class="fas fa-envelope"></i>
                               </span>
@@ -25,7 +27,7 @@
                         <div class="field">
                            <label class="label">Password</label>
                            <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password">
+                              <input class="input" type="password" placeholder="Password" name="password">
                               <span class="icon is-small is-left">
                               <i class="fas fa-lock"></i>
                               </span>
@@ -33,21 +35,30 @@
                         </div>
                         <div class="field">
                            <p class="control">
-                              <button class="button is-black mt-3">
+                              <button class="button is-black mt-3" type="submit">
                               Login
                               </button>
                            </p>
                         </div>
+                        </form>
                      </div>
                      <div class="is-divider-vertical" data-content="OR"></div>
                      <div class="column">
                         <p class="title">
                            Sign Up
                         </p>
+                        <%- include('./partials/signup-messages') %>
+                        <form action="/user/register" method="post">
+                        <div class="field">
+                           <label class="label">Name</label>
+                           <div class="control">
+                             <input class="input" type="text" placeholder="e.g Alex Smith" name="name" value="<%= typeof name != 'undefined' ? name : '' %>" required>
+                           </div>
+                        </div>
                         <div class="field">
                            <label class="label">Enter Email</label>
                            <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="Email input" value="hello@">
+                              <input class="input" type="email" placeholder="Email input" name="email" value="<%= typeof email != 'undefined' ? email : '' %>" required>
                               <span class="icon is-small is-left">
                               <i class="fas fa-envelope"></i>
                               </span>
@@ -56,7 +67,7 @@
                         <div class="field">
                            <label class="label">Enter Password</label>
                            <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password">
+                              <input class="input" type="password" placeholder="Password" name="password" value="<%= typeof password != 'undefined' ? password : '' %>" required>
                               <span class="icon is-small is-left">
                               <i class="fas fa-lock"></i>
                               </span>
@@ -65,7 +76,7 @@
                         <div class="field">
                            <label class="label">Confirm Password</label>
                            <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password">
+                              <input class="input" type="password" placeholder="Confirm Password" name="confirmPassword" value="<%= typeof confirmPassword!= 'undefined' ? confirmPassword: '' %>" required>
                               <span class="icon is-small is-left">
                               <i class="fas fa-lock"></i>
                               </span>
@@ -73,11 +84,12 @@
                         </div>
                         <div class="field">
                            <p class="control">
-                              <button class="button is-black mt-3">
+                              <button class="button is-black mt-3" type="submit">
                               Sign Up
                               </button>
                            </p>
                         </div>
+                        </form>
                      </div>
                   </div>
                </div>
