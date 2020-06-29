@@ -1,11 +1,11 @@
 exports.getaboutUs = (req,res,next) => {
     res.render('about-us', {
-        isAuth: req.isAuthenticated()
+        pageTitle: 'About Us'
     });
 };
 
 exports.getHome = (req,res,next) => {
     res.render('home', {
-        isAuth: req.isAuthenticated()
+        pageTitle: 'Home'
     });
 };

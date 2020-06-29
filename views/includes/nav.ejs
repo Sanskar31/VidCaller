@@ -4,6 +4,7 @@
    <div class="container">
       <div class="navbar-brand">
          <a class="navbar-item" href="/">
+         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
          <img src="./images/LOGO.PNG" width="160" height="150">
          </a>
          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
@@ -17,20 +18,24 @@
             <div class="navbar-item">
                <div class="buttons">
                   <a class="button is-link is-inverted is-outlined" href="/about-us">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <strong>About Us</strong>
                   </a>
                   <% if(isAuth){ %>
                   <a class="button is-link is-inverted is-outlined" href="/user/my-account">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <strong>My Account</strong>
                   </a>
                   <%}%>
                   <% if(!isAuth){ %>
                   <a class="button is-dark" href="/user/login">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   Log in / SignUp
                   </a>
                   <% } %>
                   <% if(isAuth){ %>
                   <a class="button is-dark" href="/user/logout">
+                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   Logout
                   </a>
                   <% } %>

@@ -6,6 +6,7 @@ const mongoose= require('mongoose');
 const flash= require('connect-flash');
 const session= require('express-session');
 const passport= require('passport');
+const csrf= require('csurf');
 
 const app= express();
 
@@ -14,6 +15,9 @@ require('./config/passport')(passport);
 
 //DB Config
 const db= require('./config/keys').MongoURI;
+
+//Initialize csrf protection
+const csrfProtection= csrf(); 
 
 //Connect to Mongo
 mongoose.connect(db, { useNewUrlParser: true })
@@ -37,6 +41,9 @@ app.use(session({
     saveUninitialized: true,
 }));
 
+//csrf protection
+app.use(csrfProtection);
+
 //Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -46,6 +53,8 @@ app.use(flash());
 
 //Global vars
 app.use((req,res,next)=>{
+    res.locals.csrfToken= req.csrfToken();
+    res.locals.isAuth= req.isAuthenticated();
     res.locals.success_msg= req.flash('success_msg');
     res.locals.error_msg= req.flash('error_msg');
     res.locals.error= req.flash('error');
@@ -56,8 +65,8 @@ app.use('/user',userRoutes);
 app.use(webRoutes);
 
 app.use((req,res,next) => {
-    res.status(404).render("error-404", {
-        isAuth: req.isAuthenticated()
+    res.status(404).render("error-404",{
+        pageTitle: "Page Not Found"
     });
 });
 

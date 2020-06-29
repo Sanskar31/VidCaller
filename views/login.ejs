@@ -1,4 +1,9 @@
 <%- include('./includes/header.ejs') %>
+<style>
+   #forgot-form{
+      display: none;
+   }
+</style>
 </head>
 <body>
    <%- include('./includes/nav.ejs') %>
@@ -33,14 +38,35 @@
                               </span>
                            </p>
                         </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <div class="field">
                            <p class="control">
                               <button class="button is-black mt-3" type="submit">
                               Login
                               </button>
                            </p>
+                              <a href="#" id="forgot-btn">Forgot Password?</a>
                         </div>
                         </form>
+                        <div id="forgot-form">
+                        <form  class="pt-2" method="POST" action="/user/reset-password">
+                           <div class="field">
+                           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                              <label class="label">Enter Email</label>
+                              <div class="control has-icons-left has-icons-right">
+                              <input class="input" type="email" placeholder="Email input" name="email" required>
+                              <span class="icon is-small is-left">
+                              <i class="fas fa-envelope"></i>
+                              </span>
+                              <p class="control">
+                              <button class="button is-black mt-3" type="submit">
+                                 Reset Password
+                              </button>
+                              </p>
+                           </div>
+                           </div>
+                        </form>
+                        </div>
                      </div>
                      <div class="is-divider-vertical" data-content="OR"></div>
                      <div class="column">
@@ -49,6 +75,7 @@
                         </p>
                         <%- include('./partials/signup-messages') %>
                         <form action="/user/register" method="post">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <div class="field">
                            <label class="label">Name</label>
                            <div class="control">
@@ -99,4 +126,11 @@
       </div>
       </div>
    </main>
+   
+   <script>
+      document.getElementById("forgot-btn").onclick= function(){
+         var x = document.getElementById("forgot-form");
+         x.style.display = "block";
+      }
+   </script>
    <%- include('./includes/footer.ejs') %>
