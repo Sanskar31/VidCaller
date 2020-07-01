@@ -1,11 +1,11 @@
-const express= require('express');
+const express = require("express");
 
-const controller= require('../controllers/webControllers');
+const controller = require("../controllers/webControllers");
 
 const router = express.Router();
 
-router.get('/about-us', controller.getaboutUs);
+router.get("/about-us", controller.getaboutUs);
 
-router.get('/', controller.getHome);
+router.get("/", controller.getHome);
 
-module.exports= router;
+module.exports = router;

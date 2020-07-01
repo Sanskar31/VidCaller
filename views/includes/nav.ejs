@@ -18,7 +18,7 @@
             <div class="navbar-item">
                <div class="buttons">
                   <a class="button is-link is-inverted is-outlined" href="/about-us">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <strong>About Us</strong>
                   </a>
                   <% if(isAuth){ %>
@@ -35,7 +35,7 @@
                   <% } %>
                   <% if(isAuth){ %>
                   <a class="button is-dark" href="/user/logout">
-                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   Logout
                   </a>
                   <% } %>

@@ -1,136 +1,137 @@
 <%- include('./includes/header.ejs') %>
 <style>
-   #forgot-form{
-      display: none;
-   }
+    #forgot-form{
+    display: none;
+    }
 </style>
 </head>
 <body>
-   <%- include('./includes/nav.ejs') %>
-   <main class="container bd- main pt-6">
-      <div class="columns">
-         <div class="column"></div>
-         <div class="column is-three-quarters">
-            <div class="card">
-               <div class="card-content">
-                  <div class="columns">
-                     <div class="column">
-                        <p class="title">
-                           Log In
-                        </p>
-                        <%- include('./partials/login-messages') %>
-                        <form action="/user/login" method="post">
-                        <div class="field">
-                           <label class="label">Email</label>
-                           <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="Email input" name="email">
-                              <span class="icon is-small is-left">
-                              <i class="fas fa-envelope"></i>
-                              </span>
-                           </div>
+    <%- include('./includes/nav.ejs') %>
+    <main class="container bd- main pt-6">
+        <div class="columns">
+            <div class="column"></div>
+            <div class="column is-three-quarters">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="columns">
+                            <div class="column">
+                                <p class="title">
+                                    Log In
+                                </p>
+                                <%- include('./partials/login-messages') %>
+                                <form action="/user/login" method="post">
+                                    <div class="field">
+                                        <label class="label">Email</label>
+                                        <div class="control has-icons-left has-icons-right">
+                                            <input class="input" type="email" placeholder="Email input" name="email">
+                                            <span class="icon is-small is-left">
+                                            <i class="fas fa-envelope"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label">Password</label>
+                                        <p class="control has-icons-left">
+                                            <input class="input" type="password" placeholder="Password" name="password">
+                                            <span class="icon is-small is-left">
+                                            <i class="fas fa-lock"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <div class="field">
+                                        <p class="control">
+                                            <button class="button is-black mt-3" type="submit">
+                                            Login
+                                            </button>
+                                        </p>
+                                        <a href="#" id="forgot-btn">Forgot Password?</a>
+                                    </div>
+                                </form>
+                                <div id="forgot-form">
+                                    <form  class="pt-2" method="POST" action="/user/reset-password">
+                                        <div class="field">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <label class="label">Enter Email</label>
+                                            <div class="control has-icons-left has-icons-right">
+                                                <input class="input" type="email" placeholder="Email input" name="email" required>
+                                                <span class="icon is-small is-left">
+                                                <i class="fas fa-envelope"></i>
+                                                </span>
+                                                <p class="control">
+                                                    <button class="button is-black mt-3" type="submit">
+                                                    Reset Password
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="is-divider-vertical" data-content="OR"></div>
+                            <div class="column">
+                                <p class="title">
+                                    Sign Up
+                                </p>
+                                <%- include('./partials/signup-messages') %>
+                                <form action="/user/register" method="post">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <div class="field">
+                                        <label class="label">Name</label>
+                                        <div class="control">
+                                            <input class="input" type="text" placeholder="e.g Alex Smith" name="name" value="<%= typeof name != 'undefined' ? name : '' %>" required>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label">Enter Email</label>
+                                        <div class="control has-icons-left has-icons-right">
+                                            <input class="input" type="email" placeholder="Email input" name="email" value="<%= typeof email != 'undefined' ? email : '' %>" required>
+                                            <span class="icon is-small is-left">
+                                            <i class="fas fa-envelope"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label">Enter Password</label>
+                                        <p class="control has-icons-left">
+                                            <input class="input" type="password" placeholder="Password" name="password" value="<%= typeof password != 'undefined' ? password : '' %>" required>
+                                            <span class="icon is-small is-left">
+                                            <i class="fas fa-lock"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label">Confirm Password</label>
+                                        <p class="control has-icons-left">
+                                            <input class="input" type="password" placeholder="Confirm Password" name="confirmPassword" value="<%= typeof confirmPassword!= 'undefined' ? confirmPassword: '' %>" required>
+                                            <span class="icon is-small is-left">
+                                            <i class="fas fa-lock"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <button class="button is-black mt-3" type="submit">
+                                            Sign Up
+                                            </button>
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="field">
-                           <label class="label">Password</label>
-                           <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password" name="password">
-                              <span class="icon is-small is-left">
-                              <i class="fas fa-lock"></i>
-                              </span>
-                           </p>
-                        </div>
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <div class="field">
-                           <p class="control">
-                              <button class="button is-black mt-3" type="submit">
-                              Login
-                              </button>
-                           </p>
-                              <a href="#" id="forgot-btn">Forgot Password?</a>
-                        </div>
-                        </form>
-                        <div id="forgot-form">
-                        <form  class="pt-2" method="POST" action="/user/reset-password">
-                           <div class="field">
-                           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                              <label class="label">Enter Email</label>
-                              <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="Email input" name="email" required>
-                              <span class="icon is-small is-left">
-                              <i class="fas fa-envelope"></i>
-                              </span>
-                              <p class="control">
-                              <button class="button is-black mt-3" type="submit">
-                                 Reset Password
-                              </button>
-                              </p>
-                           </div>
-                           </div>
-                        </form>
-                        </div>
-                     </div>
-                     <div class="is-divider-vertical" data-content="OR"></div>
-                     <div class="column">
-                        <p class="title">
-                           Sign Up
-                        </p>
-                        <%- include('./partials/signup-messages') %>
-                        <form action="/user/register" method="post">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <div class="field">
-                           <label class="label">Name</label>
-                           <div class="control">
-                             <input class="input" type="text" placeholder="e.g Alex Smith" name="name" value="<%= typeof name != 'undefined' ? name : '' %>" required>
-                           </div>
-                        </div>
-                        <div class="field">
-                           <label class="label">Enter Email</label>
-                           <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="Email input" name="email" value="<%= typeof email != 'undefined' ? email : '' %>" required>
-                              <span class="icon is-small is-left">
-                              <i class="fas fa-envelope"></i>
-                              </span>
-                           </div>
-                        </div>
-                        <div class="field">
-                           <label class="label">Enter Password</label>
-                           <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password" name="password" value="<%= typeof password != 'undefined' ? password : '' %>" required>
-                              <span class="icon is-small is-left">
-                              <i class="fas fa-lock"></i>
-                              </span>
-                           </p>
-                        </div>
-                        <div class="field">
-                           <label class="label">Confirm Password</label>
-                           <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Confirm Password" name="confirmPassword" value="<%= typeof confirmPassword!= 'undefined' ? confirmPassword: '' %>" required>
-                              <span class="icon is-small is-left">
-                              <i class="fas fa-lock"></i>
-                              </span>
-                           </p>
-                        </div>
-                        <div class="field">
-                           <p class="control">
-                              <button class="button is-black mt-3" type="submit">
-                              Sign Up
-                              </button>
-                           </p>
-                        </div>
-                        </form>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </div>
-         </div>
-         <div class="column"></div>
-      </div>
-      </div>
-   </main>
-   
-   <script>
-      document.getElementById("forgot-btn").onclick= function(){
-         var x = document.getElementById("forgot-form");
-         x.style.display = "block";
-      }
-   </script>
-   <%- include('./includes/footer.ejs') %>
+            <div class="column"></div>
+        </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+           $("#forgot-btn").click(function(){
+              $("#forgot-form").fadeIn();
+           });
+        });
+    </script>
+    <%- include('./includes/footer.ejs') %>
