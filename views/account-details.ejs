@@ -7,7 +7,7 @@
 </head>
 <body>
     <%- include('./includes/nav.ejs') %>
-    <main class="container bd- main pt-6">
+    <main class="container bd- main pt-4">
         <div class="columns">
             <div class="column"></div>
             <div class="column">
@@ -26,16 +26,16 @@
                                 </figure>
                             </div>
                             <div class="media-content">
-                                <p class="title is-4"><%- name %>
+                                <p class="title is-4"><%= name %>
                                 </p>
-                                <p class="subtitle is-6"><%- email %>
+                                <p class="subtitle is-6"><%= email %>
                                 </p>
                             </div>
                         </div>
                         <hr>
-                        <button class="button is-outlined is-small mt-2" id="edit-button">Edit Profile Picture</button>
-                        <p class="cart-item">
+                        <button class="button is-outlined is-small mt-2" id="edit-button">Edit Profile</button>
                         <form id="edit-form" method="POST" action="/user/update-profile" enctype="multipart/form-data">
+                        <p class="cart-item">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <div id="file-profile" class="file has-name is-small">
                                 <label class="file-label">

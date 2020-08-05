@@ -1,10 +1,14 @@
 const User = require("../models/User");
+const Room = require("../models/Room");
+
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const { ensureAuthenticated } = require("../config/auth");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+const uniqid = require("uniqid");
+const ms = require("ms");
 
 const transporter = nodemailer.createTransport(
 	sendgridTransport({
@@ -33,12 +37,30 @@ exports.getmyAccount = (req, res, next) => {
 	});
 };
 
-(exports.startCall = ensureAuthenticated),
-	(req, res) => {
-		res.render("home", {
-			pageTitle: "Home",
-		});
-	};
+// (exports.startCall = ensureAuthenticated),
+// 	(req, res) => {
+// 		res.render("home", {
+// 			pageTitle: "Home",
+// 		});
+// 	};
+
+exports.startCall = (req, res, next) => {
+	if (!req.isAuthenticated()) {
+		req.flash("error_msg", "You need to Login first!");
+		return res.redirect("/user/login");
+	}
+	const roomId = uniqid();
+	const newRoom = new Room({
+		id: roomId,
+		roomExpiration: Date.now() + ms("1h"),
+	});
+	newRoom
+		.save()
+		.then((result) => {
+			return res.redirect(`/room/${roomId}`);
+		})
+		.catch((err) => console.log(err));
+};
 
 exports.postLogin = (req, res, next) => {
 	passport.authenticate("local", {
@@ -151,7 +173,7 @@ exports.getReset = (req, res, next) => {
 					return -1;
 				}
 				user.resetToken = token;
-				user.resetTokenExpiration = Date.now() + 3600000;
+				user.resetTokenExpiration = Date.now() + ms("1h");
 				return user.save();
 			})
 			.then((result) => {

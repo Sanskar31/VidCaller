@@ -1,35 +1,40 @@
 <%- include('./includes/header.ejs') %>
+<style>
+    #shadow-card{
+        box-shadow: 5px 5px 5px grey;
+    }
+</style>
 </head>
 <body>
     <%- include('./includes/nav.ejs') %>
     <main class="container bd- main pt-6">
         <div class="columns">
             <div class="column is-two-thirds pr-6">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img src="./images/Video.PNG">
-                        </figure>
-                    </div>
-                </div>
+                <figure class="image" id="shadow-card">
+                    <img src="./images/Video.PNG">
+                </figure>
             </div>
             <div class="column">
                 <div class="card">
                     <div class="card-content">
+                        <%- include('./partials/login-messages') %>
                         <p class="title">
                             Quality Video Calls...
                         </p>
                         <p class="subtitle">
                             Now Free!
                         </p>
+                        <form method="POST" action="/join-room">
                         <div class="columns is-mobile">
-                            <div class="column control is-two-thirds">
-                                <input class="input is-hovered" type="text" placeholder="Enter Room Id">
-                            </div>
-                            <div class="column">
-                                <button class="button is-outlined">Join</button>
-                            </div>
+                                    <div class="column control is-two-thirds">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input class="input is-hovered" type="text" placeholder="Enter Room Id" name="roomId">
+                                </div>
+                                <div class="column">
+                                    <button class="button is-outlined">Join</button>
+                                </div>
                         </div>
+                        </form>
                         <div class="columns is-mobile is-centered">
                             <div class="column is-half">
                                 <p class="bd-notification is-primary ml-2">  OR</p>
@@ -37,7 +42,7 @@
                         </div>
                         <div class="columns is-mobile">
                             <div class="column is-three-quarters is-three-fifths is-offset-1">
-                                <button class="button is-black">Create A New Room</button>
+                                <a href="/user/start-call"><button class="button is-black">Create A New Room</button></a>
                             </div>
                             <div class="column"></div>
                             <div class="column"></div>

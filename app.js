@@ -10,7 +10,15 @@ const csrf = require("csurf");
 const multer = require("multer");
 const uniqid = require("uniqid");
 
+// const { PeerServer } = require('peer');
+// const peerServer = PeerServer({ port: 3001, path: '/' });
+
+//Running express function
 const app = express();
+
+//Setting up Socket.io on server
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
 
 //Passport config
 require("./config/passport")(passport);
@@ -31,6 +39,7 @@ const fileStorage = multer.diskStorage({
 	},
 });
 
+//Filtering file types
 const fileFilter = (req, file, cb) => {
 	if (
 		file.mimetype === "image.png" ||
@@ -96,15 +105,25 @@ app.use((req, res, next) => {
 	next();
 });
 
+//Socket connection
+io.on("connection", (socket) => {
+	socket.on("join-room", (roomId, userId) => {
+		socket.join(roomId);
+		socket.to(roomId).broadcast.emit("user-connected", userId);
+	});
+});
+
+//Routes
 app.use("/user", userRoutes);
 app.use(webRoutes);
 
+//Error Page
 app.use((req, res, next) => {
 	res.status(404).render("error-404", {
 		pageTitle: "Page Not Found",
 	});
 });
 
-app.listen(3000, () => {
-	console.log("Connected To Port 3000!");
+server.listen(3000, () => {
+	console.log("Connected On Port 3000!");
 });
