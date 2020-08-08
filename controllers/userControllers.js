@@ -3,11 +3,10 @@ const Room = require("../models/Room");
 
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
-const { ensureAuthenticated } = require("../config/auth");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
-const uniqid = require("uniqid");
+const randomId = require('random-id');
 const ms = require("ms");
 
 const transporter = nodemailer.createTransport(
@@ -37,19 +36,8 @@ exports.getmyAccount = (req, res, next) => {
 	});
 };
 
-// (exports.startCall = ensureAuthenticated),
-// 	(req, res) => {
-// 		res.render("home", {
-// 			pageTitle: "Home",
-// 		});
-// 	};
-
 exports.startCall = (req, res, next) => {
-	if (!req.isAuthenticated()) {
-		req.flash("error_msg", "You need to Login first!");
-		return res.redirect("/user/login");
-	}
-	const roomId = uniqid();
+	const roomId = randomId(15);
 	const newRoom = new Room({
 		id: roomId,
 		roomExpiration: Date.now() + ms("1h"),
@@ -63,8 +51,15 @@ exports.startCall = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
+	// passport.authenticate("local", {
+	// 	successRedirect: "/",
+	// 	failureRedirect: "/user/login",
+	// 	failureFlash: true,
+	// })(req, res, next);
+	const redir= req.session.returnTo;
+    delete req.session.returnTo;
 	passport.authenticate("local", {
-		successRedirect: "/",
+		successRedirect: redir || "/",
 		failureRedirect: "/user/login",
 		failureFlash: true,
 	})(req, res, next);
@@ -145,7 +140,7 @@ exports.register = (req, res, next) => {
 										from: "sanskaragarwal05@gmail.com",
 										subject: "Welcome to VidCaller",
 										html: `
-                                            <h1>You Successfully Signed Up!</h1>
+                                            <h1>You Have Successfully Signed Up!</h1>
                                             <p>Start Using VidCaller Now For Free!</p>
                                         `,
 									});

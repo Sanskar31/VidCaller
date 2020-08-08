@@ -17,10 +17,6 @@ exports.joinRoom = (req, res, next) => {
 };
 
 exports.getRoom = (req, res, next) => {
-	if (!req.isAuthenticated()) {
-		req.flash("error_msg", "You need to Login first!");
-		return res.redirect("/user/login");
-	}
 	const id = req.params.roomId;
 	Room.findOne({
 		id: id,

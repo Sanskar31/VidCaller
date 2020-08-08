@@ -3,6 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <script>
             const ROOM_ID = "<%= roomId %>";
@@ -16,6 +21,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, 300px);
             grid-auto-rows: 300px;
+            grid-gap: 50px;
             }
             video {
             width: 100%;
@@ -25,6 +31,9 @@
         </style>
     </head>
     <body>
-        <div id="video-grid"></div>
+
+        <main class="container bd- main pt-6">
+            <div id="video-grid"></div>
+        </main>
     </body>
 </html>

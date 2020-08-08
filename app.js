@@ -8,7 +8,7 @@ const session = require("express-session");
 const passport = require("passport");
 const csrf = require("csurf");
 const multer = require("multer");
-const uniqid = require("uniqid");
+var randomId = require('random-id');
 
 // const { PeerServer } = require('peer');
 // const peerServer = PeerServer({ port: 3001, path: '/' });
@@ -35,7 +35,7 @@ const fileStorage = multer.diskStorage({
 		cb(null, "images");
 	},
 	filename: (req, file, cb) => {
-		cb(null, uniqid("", "-" + file.originalname));
+		cb(null, `${randomId(10)}-${file.originalname}`);
 	},
 });
 
