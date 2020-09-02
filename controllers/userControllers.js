@@ -9,7 +9,7 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 const randomId = require('random-id');
 const ms = require("ms");
 
-const key= require('../config/keys');
+const key= require('../config/keys.json');
 
 const transporter = nodemailer.createTransport(
 	sendgridTransport({

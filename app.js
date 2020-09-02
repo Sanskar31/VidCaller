@@ -24,7 +24,7 @@ const io = require("socket.io")(server);
 require("./config/passport")(passport);
 
 //DB Config
-const db = require("./config/keys").MongoURI;
+const db = require("./config/keys.json").MongoURI;
 
 //Initialize csrf protection
 const csrfProtection = csrf();
