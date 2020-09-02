@@ -97,7 +97,7 @@ app.use(flash());
 
 //Global vars
 app.use((req, res, next) => {
-	res.locals.csrfToken = req.csrfToken();
+	res.locals.csrfToken = req.csrfToken(); 
 	res.locals.isAuth = req.isAuthenticated();
 	res.locals.success_msg = req.flash("success_msg");
 	res.locals.error_msg = req.flash("error_msg");

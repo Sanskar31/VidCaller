@@ -9,11 +9,12 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 const randomId = require('random-id');
 const ms = require("ms");
 
+const key= require('../config/keys');
+
 const transporter = nodemailer.createTransport(
 	sendgridTransport({
 		auth: {
-			api_key:
-				"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",
+			api_key: key.SendGridKey
 		},
 	})
 );
@@ -51,11 +52,6 @@ exports.startCall = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-	// passport.authenticate("local", {
-	// 	successRedirect: "/",
-	// 	failureRedirect: "/user/login",
-	// 	failureFlash: true,
-	// })(req, res, next);
 	const redir= req.session.returnTo;
     delete req.session.returnTo;
 	passport.authenticate("local", {
