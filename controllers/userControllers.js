@@ -6,16 +6,16 @@ const passport = require("passport");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
-const randomId = require('random-id');
+const randomId = require("random-id");
 const ms = require("ms");
-const { v4: uuidV4 } = require('uuid')
+const { v4: uuidV4 } = require("uuid");
 
-const key= require('../config/keys.json');
+const key = require("../config/keys.json");
 
 const transporter = nodemailer.createTransport(
 	sendgridTransport({
 		auth: {
-			api_key: key.SendGridKey
+			api_key: key.SendGridKey,
 		},
 	})
 );
@@ -49,12 +49,16 @@ exports.startCall = (req, res, next) => {
 		.then((result) => {
 			return res.redirect(`/room/${roomId}`);
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.postLogin = (req, res, next) => {
-	const redir= req.session.returnTo;
-    delete req.session.returnTo;
+	const redir = req.session.returnTo;
+	delete req.session.returnTo;
 	passport.authenticate("local", {
 		successRedirect: redir || "/",
 		failureRedirect: "/user/login",
@@ -142,12 +146,20 @@ exports.register = (req, res, next) => {
                                         `,
 									});
 								})
-								.catch((err) => console.log(err));
+								.catch((err) => {
+									const error = new Error(err);
+									error.httpStatusCode = 500;
+									return next(error);
+								});
 						});
 					});
 				}
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				const error = new Error(err);
+				error.httpStatusCode = 500;
+				return next(error);
+			});
 	}
 };
 
@@ -189,7 +201,11 @@ exports.getReset = (req, res, next) => {
                     `,
 				});
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				const error = new Error(err);
+				error.httpStatusCode = 500;
+				return next(error);
+			});
 	});
 };
 
@@ -213,7 +229,11 @@ exports.getResetPassword = (req, res, next) => {
 				passwordToken: token,
 			});
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.newPassword = (req, res, next) => {
@@ -255,7 +275,11 @@ exports.newPassword = (req, res, next) => {
 				req.flash("success_msg", "Password Reset Successful!");
 				res.redirect("/user/login");
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				const error = new Error(err);
+				error.httpStatusCode = 500;
+				return next(error);
+			});
 	}
 };
 
@@ -277,5 +301,9 @@ exports.updateProfile = (req, res, next) => {
 			req.flash("success_msg", "Profile Picture Updated!");
 			return res.redirect("/user/my-account");
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };

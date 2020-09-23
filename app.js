@@ -8,8 +8,8 @@ const session = require("express-session");
 const passport = require("passport");
 const csrf = require("csurf");
 const multer = require("multer");
-var randomId = require('random-id');
-const { v4: uuidV4 } = require('uuid')
+var randomId = require("random-id");
+const { v4: uuidV4 } = require("uuid");
 
 // const { PeerServer } = require('peer');
 // const peerServer = PeerServer({ port: 3001, path: '/' });
@@ -57,7 +57,11 @@ const fileFilter = (req, file, cb) => {
 mongoose
 	.connect(db, { useNewUrlParser: true })
 	.then(() => console.log("MongoDB Connected!"))
-	.catch((err) => console.log(err));
+	.catch((err) => {
+		const error = new Error(err);
+		error.httpStatusCode = 500;
+		return next(error);
+	});
 
 //Setting View Engine
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -98,7 +102,7 @@ app.use(flash());
 
 //Global vars
 app.use((req, res, next) => {
-	res.locals.csrfToken = req.csrfToken(); 
+	res.locals.csrfToken = req.csrfToken();
 	res.locals.isAuth = req.isAuthenticated();
 	res.locals.success_msg = req.flash("success_msg");
 	res.locals.error_msg = req.flash("error_msg");
@@ -119,7 +123,18 @@ app.use("/user", userRoutes);
 app.use(webRoutes);
 
 //Error Page
-app.use((req, res, next) => {
+app.use("/500", (req, res, next) => {
+	res.status(500).render("500-Page", {
+		pageTitle: "Something Went Wrong!",
+	});
+});
+
+app.use("/", (error, req, res, next) => {
+	console.log(error);
+	res.redirect("/500");
+});
+
+app.use("/", (req, res, next) => {
 	res.status(404).render("error-404", {
 		pageTitle: "Page Not Found",
 	});

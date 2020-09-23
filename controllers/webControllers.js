@@ -31,5 +31,9 @@ exports.getRoom = (req, res, next) => {
 				roomId: id,
 			});
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
