@@ -8,6 +8,7 @@ const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const randomId = require('random-id');
 const ms = require("ms");
+const { v4: uuidV4 } = require('uuid')
 
 const key= require('../config/keys.json');
 
@@ -38,7 +39,7 @@ exports.getmyAccount = (req, res, next) => {
 };
 
 exports.startCall = (req, res, next) => {
-	const roomId = randomId(15);
+	const roomId = uuidV4();
 	const newRoom = new Room({
 		id: roomId,
 		roomExpiration: Date.now() + ms("1h"),
